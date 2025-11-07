@@ -14,16 +14,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Coach',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('age', models.IntegerField()),
-                ('experience_years', models.IntegerField()),
-                ('country', models.CharField(max_length=50)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Games',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -48,44 +38,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='BattleRoyaleMatch',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.matches')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='PlayerStatistics',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('matches_played', models.IntegerField()),
-                ('wins', models.IntegerField()),
-                ('losses', models.IntegerField()),
-                ('kills', models.IntegerField()),
-                ('deaths', models.IntegerField()),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.players')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='SoloMatch',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.matches')),
-                ('players', models.ManyToManyField(to='MyBestTournaments.players')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='SoloResult',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.IntegerField()),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.solomatch')),
-                ('players', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.players')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Teams',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -96,62 +48,13 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='TeamResult',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('score', models.IntegerField()),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.battleroyalematch')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.teams')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='TeamMatch',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.matches')),
-                ('teams', models.ManyToManyField(to='MyBestTournaments.teams')),
-            ],
-        ),
-        migrations.AddField(
-            model_name='battleroyalematch',
-            name='teams',
-            field=models.ManyToManyField(to='MyBestTournaments.teams'),
-        ),
-        migrations.CreateModel(
-            name='TeamStatistics',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('matches_played', models.IntegerField()),
-                ('wins', models.IntegerField()),
-                ('losses', models.IntegerField()),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.teams')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Tournaments',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
+                ('date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('location', models.CharField(max_length=100)),
-                ('date', models.DateField(default=django.utils.timezone.now)),
-                ('description', models.TextField(max_length=500)),
-                ('prize_pool', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.games')),
-            ],
-        ),
-        migrations.AddField(
-            model_name='matches',
-            name='tournament',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.tournaments'),
-        ),
-        migrations.CreateModel(
-            name='TournamentStatistics',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('total_matches', models.IntegerField()),
-                ('total_teams', models.IntegerField()),
-                ('tournament', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='MyBestTournaments.tournaments')),
+                ('teams', models.ManyToManyField(to='MyBestTournaments.teams')),
             ],
         ),
     ]

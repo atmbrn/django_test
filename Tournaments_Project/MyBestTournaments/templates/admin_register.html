@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Admin Register{% endblock %}
+{% block content %}
+<h2>Register Admin</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p><label>Secret code: <input type="password" name="secret_code"></label></p>
+  <button type="submit">Create Admin</button>
+</form>
+{% endblock %}
